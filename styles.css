@@ -79,6 +79,20 @@ body {
   font-size: 1.05rem;
   letter-spacing: 0.08em;
   transform: rotate(-1.5deg);
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.15s ease;
+}
+
+.issue-stamp:active,
+.stamp-slam {
+  animation: stampSlam 0.35s ease-out;
+}
+
+@keyframes stampSlam {
+  0% { transform: scale(1.25) rotate(-6deg); }
+  50% { transform: scale(0.92) rotate(2deg); }
+  100% { transform: scale(1) rotate(-1.5deg); }
 }
 
 .masthead-ribbon {
@@ -93,6 +107,13 @@ body {
   letter-spacing: 0.04em;
   max-width: 100%;
   overflow-wrap: anywhere;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.15s ease;
+}
+
+.masthead-ribbon:hover {
+  transform: translateY(-2px);
 }
 
 .burst-badge {
@@ -104,6 +125,18 @@ body {
   flex-shrink: 0;
   transform: rotate(8deg);
   animation: burstPulse 2.4s ease-in-out infinite;
+  cursor: pointer;
+  user-select: none;
+}
+
+.burst-badge.spin-pop {
+  animation: badgeSpinPop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes badgeSpinPop {
+  0% { transform: rotate(8deg) scale(1); }
+  50% { transform: rotate(200deg) scale(1.35); }
+  100% { transform: rotate(368deg) scale(1); }
 }
 
 .burst-svg {
@@ -199,6 +232,24 @@ body {
 .ink-balloon {
   position: absolute;
   filter: drop-shadow(3px 3px 0 #2b0918);
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.ink-balloon:active,
+.ink-heart:active {
+  transform: scale(1.22);
+}
+
+.balloon-pop {
+  animation: balloonPopBounce 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+@keyframes balloonPopBounce {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.35) rotate(14deg); }
+  100% { transform: scale(1) rotate(0deg); }
 }
 
 .balloon-a {
@@ -250,6 +301,17 @@ body {
   gap: 8px;
   width: min(225px, 68vw);
   transition: transform 0.12s ease;
+}
+
+.cake-trigger.cake-bounce {
+  animation: cakeJelly 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes cakeJelly {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.14, 0.88); }
+  65% { transform: scale(0.92, 1.1); }
+  100% { transform: scale(1); }
 }
 
 .cake-trigger:active {
@@ -350,6 +412,12 @@ body {
   border-radius: 18px;
   padding: 16px 18px;
   box-shadow: 4px 4px 0 var(--ink);
+  cursor: pointer;
+  transition: transform 0.14s ease;
+}
+
+.speech-bubble.bubble-pop {
+  animation: comicPopBounce 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .wish-text {
@@ -388,6 +456,23 @@ body {
   border: 2.5px solid var(--ink);
   box-shadow: 3px 3px 0 var(--ink);
   padding: 10px 12px;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.mini-card:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.mini-card.card-pop {
+  animation: comicPopBounce 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes comicPopBounce {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.04) rotate(-1deg); }
+  100% { transform: scale(1) rotate(0deg); }
 }
 
 .mini-icon {
