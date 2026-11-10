@@ -1,0 +1,635 @@
+:root {
+  --pink-bg: #ff9ec2;
+  --pink-deep: #ff3b7f;
+  --pink-bright: #ff5c97;
+  --pink-soft: #ffd6e6;
+  --paper: #fff5f8;
+  --butter: #ffd166;
+  --coral: #ff6b8b;
+  --ink: #2b0918;
+  --ink-shadow: 5px 5px 0 #2b0918;
+  --ink-shadow-sm: 3px 3px 0 #2b0918;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100dvh;
+  color: var(--ink);
+  font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+  background-color: var(--pink-bg);
+  /* Classic comic Ben-Day halftone dot print background */
+  background-image:
+    radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.45) 0%, transparent 45%),
+    radial-gradient(rgba(255, 59, 127, 0.28) 2.2px, transparent 2.3px);
+  background-size: 100% 100%, 16px 16px;
+  overflow-x: hidden;
+  touch-action: manipulation;
+}
+
+#fxCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  pointer-events: none;
+}
+
+#burstCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.comic-sheet {
+  position: relative;
+  z-index: 10;
+  width: min(940px, 92%);
+  margin: 0 auto;
+  padding: max(10px, env(safe-area-inset-top)) 0 max(22px, env(safe-area-inset-bottom));
+}
+
+/* MASTHEAD */
+.comic-masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.issue-stamp {
+  background: var(--butter);
+  border: 3px solid var(--ink);
+  box-shadow: var(--ink-shadow-sm);
+  padding: 6px 12px;
+  font-family: "Bangers", "Trebuchet MS", sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  transform: rotate(-1.5deg);
+}
+
+.masthead-ribbon {
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  box-shadow: var(--ink-shadow-sm);
+  padding: 6px 14px;
+  font-family: "Comic Neue", "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 0.92rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.burst-badge {
+  position: relative;
+  width: 68px;
+  height: 68px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transform: rotate(8deg);
+  animation: burstPulse 2.4s ease-in-out infinite;
+}
+
+.burst-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.burst-badge span {
+  position: relative;
+  z-index: 2;
+  font-family: "Bangers", sans-serif;
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+}
+
+@keyframes burstPulse {
+  0%, 100% { transform: rotate(8deg) scale(1); }
+  50% { transform: rotate(12deg) scale(1.07); }
+}
+
+/* COMIC PANEL GRID */
+.comic-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.comic-panel {
+  background: var(--paper);
+  border: 3.5px solid var(--ink);
+  box-shadow: var(--ink-shadow);
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.panel-caption {
+  display: inline-block;
+  background: var(--pink-deep);
+  color: #fff;
+  border: 2.5px solid var(--ink);
+  padding: 3px 10px;
+  font-family: "Bangers", sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.07em;
+  margin-bottom: 12px;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* PANEL 1: HERO */
+.panel-hero {
+  background-color: var(--paper);
+  background-image: radial-gradient(rgba(255, 92, 151, 0.14) 1.8px, transparent 1.9px);
+  background-size: 12px 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.panel-hero .panel-caption {
+  align-self: flex-start;
+}
+
+.comic-title {
+  margin: 0 0 6px;
+  font-family: "Bangers", "Impact", sans-serif;
+  font-size: clamp(2.15rem, 8.8vw, 3.45rem);
+  line-height: 0.96;
+  letter-spacing: 0.04em;
+  color: var(--pink-deep);
+  -webkit-text-stroke: 2px var(--ink);
+  text-shadow: 4px 4px 0 var(--ink);
+}
+
+.hero-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 2px 0 6px;
+}
+
+.floating-heart-cluster {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ink-heart,
+.ink-balloon {
+  position: absolute;
+  filter: drop-shadow(3px 3px 0 #2b0918);
+}
+
+.balloon-a {
+  width: 52px;
+  left: 0;
+  top: 4%;
+  transform: rotate(-10deg);
+  animation: bobSlow 3.3s ease-in-out infinite;
+}
+
+.balloon-b {
+  width: 48px;
+  right: 0;
+  top: 6%;
+  transform: rotate(10deg);
+  animation: bobSlow 2.9s ease-in-out infinite reverse;
+}
+
+.heart-a {
+  width: 38px;
+  left: 6%;
+  bottom: 24%;
+  transform: rotate(-14deg);
+  animation: bobSlow 3s ease-in-out infinite;
+}
+
+.heart-b {
+  width: 34px;
+  right: 6%;
+  bottom: 24%;
+  transform: rotate(15deg);
+  animation: bobSlow 2.6s ease-in-out infinite reverse;
+}
+
+@keyframes bobSlow {
+  0%, 100% { transform: translateY(0) rotate(-10deg); }
+  50% { transform: translateY(-9px) rotate(6deg); }
+}
+
+.cake-trigger {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: min(225px, 68vw);
+  transition: transform 0.12s ease;
+}
+
+.cake-trigger:active {
+  transform: scale(0.96);
+}
+
+.cake-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(4px 4px 0 rgba(43, 9, 24, 0.2));
+}
+
+.flame-item {
+  transform-origin: center 42px;
+  animation: flicker 0.55s ease-in-out infinite alternate;
+}
+
+.flame-delay {
+  animation-delay: 0.2s;
+}
+
+@keyframes flicker {
+  0% { transform: scale(1) rotate(-3deg); }
+  100% { transform: scale(1.08, 1.15) rotate(3deg); }
+}
+
+.smoke-puffs {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.cake-blown .flames {
+  opacity: 0;
+  transform: scale(0.2);
+  transform-origin: center 35px;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.cake-blown .smoke-puffs {
+  opacity: 1;
+  animation: riseSmoke 1.4s ease-out forwards;
+}
+
+@keyframes riseSmoke {
+  0% { transform: translateY(4px) scale(0.8); opacity: 0.95; }
+  100% { transform: translateY(-24px) scale(1.25); opacity: 0; }
+}
+
+.tap-hint {
+  display: inline-block;
+  background: var(--butter);
+  border: 2.5px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  padding: 5px 12px;
+  font-family: "Bangers", sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+
+.sfx-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 2.5px dashed var(--ink);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.sfx-pill {
+  background: var(--pink-soft);
+  border: 2px solid var(--ink);
+  padding: 4px 10px;
+}
+
+.sfx-counter strong {
+  color: var(--pink-deep);
+  font-size: 1.05rem;
+}
+
+/* PANEL 2: SPEECH BUBBLE */
+.panel-story {
+  background-color: #ffe9f1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.speech-bubble {
+  position: relative;
+  background: #ffffff;
+  border: 3px solid var(--ink);
+  border-radius: 18px;
+  padding: 16px 18px;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.wish-text {
+  margin: 0;
+  font-family: "Comic Neue", "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: clamp(1rem, 3.8vw, 1.15rem);
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.bubble-tail {
+  position: absolute;
+  bottom: -16px;
+  left: 34px;
+  width: 24px;
+  height: 16px;
+  background: #ffffff;
+  border-left: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+  transform: skewX(-28deg);
+}
+
+.comic-mini-strip {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.mini-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--paper);
+  border: 2.5px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  padding: 10px 12px;
+}
+
+.mini-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.mini-card strong {
+  display: block;
+  font-family: "Bangers", sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.05em;
+  color: var(--pink-deep);
+}
+
+.mini-card span {
+  display: block;
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+
+.sender-sign {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--butter);
+  border: 2.5px solid var(--ink);
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.sender-sign strong {
+  font-family: "Bangers", sans-serif;
+  font-size: 1.18rem;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+
+/* PANEL 3: ACTIONS */
+.panel-actions {
+  background: #ffd6e6;
+}
+
+.action-buttons {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.comic-btn {
+  appearance: none;
+  min-height: 48px;
+  border: 3px solid var(--ink);
+  box-shadow: var(--ink-shadow-sm);
+  padding: 12px 16px;
+  font-family: "Bangers", "Trebuchet MS", sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.comic-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+.btn-primary {
+  background: var(--pink-deep);
+  color: #ffffff;
+}
+
+.btn-secondary {
+  background: var(--butter);
+}
+
+.btn-cream {
+  background: var(--paper);
+}
+
+.mobile-tip {
+  margin: 12px 0 0;
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+/* FLOATING COMIC POP WORDS */
+.comic-pop-callout {
+  position: fixed;
+  z-index: 35;
+  pointer-events: none;
+  background: var(--butter);
+  border: 2.5px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  padding: 3px 9px;
+  font-family: "Bangers", sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  transform: translate(-50%, -50%) rotate(-8deg);
+  animation: popCallout 0.65s ease-out forwards;
+}
+
+@keyframes popCallout {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(0.7) rotate(-10deg); }
+  45% { opacity: 1; transform: translate(-50%, -95%) scale(1.12) rotate(5deg); }
+  100% { opacity: 0; transform: translate(-50%, -140%) scale(0.95) rotate(8deg); }
+}
+
+/* MODAL */
+.comic-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(43, 9, 24, 0.65);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+
+.comic-modal-backdrop[hidden] {
+  display: none;
+}
+
+.comic-modal {
+  width: min(460px, 100%);
+  background: var(--paper);
+  border: 4px solid var(--ink);
+  box-shadow: 7px 7px 0 var(--ink);
+  padding: 16px;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-family: "Bangers", sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+  color: var(--pink-deep);
+}
+
+.close-btn {
+  width: 38px;
+  height: 38px;
+  border: 3px solid var(--ink);
+  background: var(--butter);
+  box-shadow: 2px 2px 0 var(--ink);
+  font-family: "Bangers", sans-serif;
+  font-size: 1.15rem;
+  cursor: pointer;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modal-form label span {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.modal-form input,
+.modal-form textarea {
+  width: 100%;
+  border: 2.5px solid var(--ink);
+  background: #ffffff;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+  resize: vertical;
+}
+
+.modal-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.copy-feedback {
+  margin: 2px 0 0;
+  min-height: 1.2em;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--pink-deep);
+}
+
+/* DESKTOP / TABLET LAYOUT */
+@media (min-width: 720px) {
+  .comic-sheet {
+    padding: 22px 20px 36px;
+  }
+
+  .comic-grid {
+    grid-template-columns: 1.08fr 0.92fr;
+    align-items: stretch;
+  }
+
+  .panel-actions {
+    grid-column: 1 / -1;
+  }
+
+  .action-buttons {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .comic-mini-strip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .modal-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .burst-badge,
+  .heart-a,
+  .heart-b,
+  .flame-item {
+    animation: none;
+  }
+}

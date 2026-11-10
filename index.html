@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#ff4d8d" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 56 C32 56 6 40 6 22 C6 12 14 6 23 6 C28 6 31 9 32 13 C33 9 36 6 41 6 C50 6 58 12 58 22 C58 40 32 56 32 56 Z' fill='%23FF3B7F' stroke='%232B0918' stroke-width='4'/%3E%3C/svg%3E" />
+  <title>Selamat Ulang Tahun - Edisi Komik Pink</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,700;1,700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <canvas id="fxCanvas" aria-hidden="true"></canvas>
+  <canvas id="burstCanvas" aria-hidden="true"></canvas>
+
+  <main class="comic-sheet" id="comicSheet">
+    <header class="comic-masthead">
+      <div class="issue-stamp">EDISI ULANG TAHUN</div>
+      <div class="masthead-ribbon" id="recipientTag">UNTUK KAMU</div>
+      <div class="burst-badge" aria-hidden="true">
+        <svg viewBox="0 0 120 120" class="burst-svg">
+          <polygon points="60,4 73,28 100,15 92,43 118,56 94,72 106,99 77,93 64,117 48,93 20,104 28,75 4,60 28,44 17,17 45,26" fill="#FFD166" stroke="#2B0918" stroke-width="4" stroke-linejoin="round" />
+        </svg>
+        <span>HBD!</span>
+      </div>
+    </header>
+
+    <section class="comic-grid">
+      <!-- PANEL 1: HERO COVER & INTERACTIVE CAKE -->
+      <article class="comic-panel panel-hero">
+        <div class="panel-caption">ADEGAN 01 / WAKTUNYA TIUP LILIN</div>
+
+        <h1 class="comic-title" id="heroTitle">
+          SELAMAT ULANG TAHUN!
+        </h1>
+
+        <div class="hero-stage">
+          <!-- Left & right floating comic balloons + love badges -->
+          <div class="floating-heart-cluster" aria-hidden="true">
+            <svg viewBox="0 0 80 120" class="ink-balloon balloon-a">
+              <ellipse cx="40" cy="40" rx="28" ry="33" fill="#FF4D8D" stroke="#2B0918" stroke-width="4.5" />
+              <path d="M27 25 C27 18 32 14 37 14" fill="none" stroke="#FFF4F7" stroke-width="4" stroke-linecap="round" />
+              <path d="M40 48 C40 48 29 40 29 33 C29 29 32 26 36 26 C38 26 39 28 40 30 C41 28 42 26 44 26 C48 26 51 29 51 33 C51 40 40 48 40 48 Z" fill="#FFF4F7" />
+              <polygon points="40,73 33,81 47,81" fill="#FF4D8D" stroke="#2B0918" stroke-width="3.5" stroke-linejoin="round" />
+              <path d="M40 81 Q33 95 43 106 Q48 112 39 118" fill="none" stroke="#2B0918" stroke-width="3.5" stroke-linecap="round" />
+            </svg>
+            <svg viewBox="0 0 80 120" class="ink-balloon balloon-b">
+              <ellipse cx="40" cy="40" rx="26" ry="31" fill="#FF85B3" stroke="#2B0918" stroke-width="4.5" />
+              <path d="M28 26 C28 19 33 15 37 15" fill="none" stroke="#FFF4F7" stroke-width="4" stroke-linecap="round" />
+              <polygon points="40,71 34,79 46,79" fill="#FF85B3" stroke="#2B0918" stroke-width="3.5" stroke-linejoin="round" />
+              <path d="M40 79 Q47 93 37 104 Q32 111 41 117" fill="none" stroke="#2B0918" stroke-width="3.5" stroke-linecap="round" />
+            </svg>
+            <svg viewBox="0 0 80 80" class="ink-heart heart-a">
+              <path d="M40 70 C40 70 8 49 8 27 C8 15 18 7 29 7 C35 7 38 11 40 15 C42 11 45 7 51 7 C62 7 72 15 72 27 C72 49 40 70 40 70 Z" fill="#FF3B7F" stroke="#2B0918" stroke-width="4.5" stroke-linejoin="round" />
+              <path d="M20 23 C20 18 24 15 28 15" fill="none" stroke="#FFF4F7" stroke-width="3.5" stroke-linecap="round" />
+            </svg>
+            <svg viewBox="0 0 60 60" class="ink-heart heart-b">
+              <path d="M30 52 C30 52 6 37 6 20 C6 11 13 5 22 5 C26 5 29 8 30 11 C31 8 34 5 38 5 C47 5 54 11 54 20 C54 37 30 52 30 52 Z" fill="#FF9EC2" stroke="#2B0918" stroke-width="4" stroke-linejoin="round" />
+            </svg>
+          </div>
+
+          <!-- Interactive Comic Birthday Cake SVG -->
+          <button type="button" class="cake-trigger" id="cakeButton" aria-label="Tiup lilin ulang tahun">
+            <svg viewBox="0 0 280 240" class="cake-svg" id="cakeSvg">
+              <!-- Plate shadow & base -->
+              <ellipse cx="140" cy="216" rx="116" ry="16" fill="#FF9EC2" stroke="#2B0918" stroke-width="4" />
+              <ellipse cx="140" cy="210" rx="108" ry="13" fill="#FFF4F7" stroke="#2B0918" stroke-width="4" />
+
+              <!-- Bottom tier -->
+              <rect x="44" y="138" width="192" height="68" rx="14" fill="#FF5C97" stroke="#2B0918" stroke-width="4.5" />
+              <!-- Bottom tier halftone stripe -->
+              <rect x="46" y="176" width="188" height="28" rx="8" fill="#FF3B7F" opacity="0.55" />
+              <!-- Bottom icing drips -->
+              <path d="M44 148 Q60 166 76 148 Q92 168 108 148 Q124 166 140 148 Q156 168 172 148 Q188 166 204 148 Q220 164 236 148 L236 138 L44 138 Z" fill="#FFE6F0" stroke="#2B0918" stroke-width="4" stroke-linejoin="round" />
+
+              <!-- Top tier -->
+              <rect x="74" y="84" width="132" height="56" rx="12" fill="#FF85B3" stroke="#2B0918" stroke-width="4.5" />
+              <!-- Top icing drips -->
+              <path d="M74 96 Q90 114 106 96 Q123 116 140 96 Q157 114 174 96 Q190 112 206 96 L206 84 L74 84 Z" fill="#FFF4F7" stroke="#2B0918" stroke-width="4" stroke-linejoin="round" />
+
+              <!-- Comic heart emblem on cake -->
+              <path d="M140 185 C140 185 123 173 123 161 C123 155 128 151 133 151 C136 151 139 153 140 156 C141 153 144 151 147 151 C152 151 157 155 157 161 C157 173 140 185 140 185 Z" fill="#FFD166" stroke="#2B0918" stroke-width="3.5" stroke-linejoin="round" />
+
+              <!-- Comic highlight strokes -->
+              <line x1="60" y1="164" x2="60" y2="192" stroke="#FFF4F7" stroke-width="4" stroke-linecap="round" />
+              <line x1="88" y1="112" x2="88" y2="128" stroke="#FFF4F7" stroke-width="3.5" stroke-linecap="round" />
+
+              <!-- Three comic candles -->
+              <g class="candles">
+                <rect x="98" y="48" width="14" height="36" rx="4" fill="#FFD166" stroke="#2B0918" stroke-width="3.5" />
+                <line x1="99" y1="60" x2="111" y2="55" stroke="#FF4D8D" stroke-width="3" />
+                <line x1="99" y1="72" x2="111" y2="67" stroke="#FF4D8D" stroke-width="3" />
+
+                <rect x="133" y="42" width="14" height="42" rx="4" fill="#FF3B7F" stroke="#2B0918" stroke-width="3.5" />
+                <line x1="134" y1="56" x2="146" y2="51" stroke="#FFF4F7" stroke-width="3" />
+                <line x1="134" y1="69" x2="146" y2="64" stroke="#FFF4F7" stroke-width="3" />
+
+                <rect x="168" y="48" width="14" height="36" rx="4" fill="#FFD166" stroke="#2B0918" stroke-width="3.5" />
+                <line x1="169" y1="60" x2="181" y2="55" stroke="#FF4D8D" stroke-width="3" />
+                <line x1="169" y1="72" x2="181" y2="67" stroke="#FF4D8D" stroke-width="3" />
+              </g>
+
+              <!-- Flames -->
+              <g class="flames" id="candleFlames">
+                <g class="flame-item">
+                  <path d="M105 18 C113 28 113 42 105 45 C97 42 97 28 105 18 Z" fill="#FF9F1C" stroke="#2B0918" stroke-width="3" />
+                  <path d="M105 27 C108 32 108 40 105 42 C102 40 102 32 105 27 Z" fill="#FFF3B0" />
+                </g>
+                <g class="flame-item flame-delay">
+                  <path d="M140 12 C148 22 148 36 140 39 C132 36 132 22 140 12 Z" fill="#FF9F1C" stroke="#2B0918" stroke-width="3" />
+                  <path d="M140 21 C143 26 143 34 140 36 C137 34 137 26 140 21 Z" fill="#FFF3B0" />
+                </g>
+                <g class="flame-item">
+                  <path d="M175 18 C183 28 183 42 175 45 C167 42 167 28 175 18 Z" fill="#FF9F1C" stroke="#2B0918" stroke-width="3" />
+                  <path d="M175 27 C178 32 178 40 175 42 C172 40 172 32 175 27 Z" fill="#FFF3B0" />
+                </g>
+              </g>
+
+              <!-- Smoke puffs when blown out -->
+              <g class="smoke-puffs" id="smokePuffs">
+                <circle cx="105" cy="30" r="6" fill="#FFF4F7" stroke="#2B0918" stroke-width="2.5" />
+                <circle cx="140" cy="22" r="8" fill="#FFF4F7" stroke="#2B0918" stroke-width="2.5" />
+                <circle cx="175" cy="30" r="6" fill="#FFF4F7" stroke="#2B0918" stroke-width="2.5" />
+              </g>
+            </svg>
+            <span class="tap-hint" id="cakeHint">KETUK KUE UNTUK TIUP LILIN</span>
+          </button>
+        </div>
+
+        <div class="sfx-row">
+          <span class="sfx-pill" id="wishStatus">LILIN MENYALA</span>
+          <span class="sfx-counter">BALON MELETUS: <strong id="popCount">0</strong></span>
+        </div>
+      </article>
+
+      <!-- PANEL 2: COMIC SPEECH BUBBLE & WISHES -->
+      <article class="comic-panel panel-story">
+        <div class="panel-caption">ADEGAN 02 / DOA & HARAPAN MANIS</div>
+
+        <div class="speech-bubble bubble-primary">
+          <p class="wish-text" id="wishText">
+            Hari ini dunia ikut merayakan senyummu. Semoga panjang umur, sehat selalu, rezeki lancar, dan semua hal baik yang kamu semogakan segera berdatangan satu per satu.
+          </p>
+          <span class="bubble-tail" aria-hidden="true"></span>
+        </div>
+
+        <div class="comic-mini-strip">
+          <div class="mini-card">
+            <svg viewBox="0 0 64 64" class="mini-icon" aria-hidden="true">
+              <ellipse cx="32" cy="25" rx="18" ry="21" fill="#FF4D8D" stroke="#2B0918" stroke-width="3.5" />
+              <path d="M23 16 C23 12 26 10 29 10" fill="none" stroke="#FFF4F7" stroke-width="3" stroke-linecap="round" />
+              <polygon points="32,46 27,51 37,51" fill="#FF4D8D" stroke="#2B0918" stroke-width="2.5" stroke-linejoin="round" />
+              <path d="M32 51 Q28 57 33 62" fill="none" stroke="#2B0918" stroke-width="2.5" stroke-linecap="round" />
+            </svg>
+            <div>
+              <strong>PENUH CERIA</strong>
+              <span>Ketuk balon yang lewat untuk ledakan warna pink.</span>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <svg viewBox="0 0 64 64" class="mini-icon" aria-hidden="true">
+              <path d="M32 54 C32 54 8 39 8 22 C8 12 16 6 24 6 C28 6 31 9 32 13 C33 9 36 6 40 6 C48 6 56 12 56 22 C56 39 32 54 32 54 Z" fill="#FF85B3" stroke="#2B0918" stroke-width="3.5" stroke-linejoin="round" />
+              <path d="M18 19 C18 15 21 13 24 13" fill="none" stroke="#FFF4F7" stroke-width="3" stroke-linecap="round" />
+            </svg>
+            <div>
+              <strong>PENUH LOVE</strong>
+              <span>Sentuh layar di mana saja untuk menebar hati komik.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sender-sign">
+          <span>DARI PENGIRIM:</span>
+          <strong id="senderName">SAHABATMU</strong>
+        </div>
+      </article>
+
+      <!-- PANEL 3: CONTROLS & PERSONALIZE -->
+      <article class="comic-panel panel-actions">
+        <div class="panel-caption">ADEGAN 03 / RAYAKAN SEKARANG</div>
+
+        <div class="action-buttons">
+          <button type="button" class="comic-btn btn-primary" id="burstBtn">
+            LEPASKAN BALON &amp; LOVE
+          </button>
+          <button type="button" class="comic-btn btn-secondary" id="blowBtn">
+            TIUP LILIN SEKARANG
+          </button>
+          <button type="button" class="comic-btn btn-cream" id="customizeBtn">
+            ATUR NAMA &amp; PESAN
+          </button>
+        </div>
+
+        <p class="mobile-tip">
+          Tips di HP: sentuh layar di bagian mana saja untuk efek love, atau ketuk balon yang terbang ke atas.
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <!-- COMIC CUSTOMIZER MODAL -->
+  <div class="comic-modal-backdrop" id="customModal" hidden>
+    <div class="comic-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <h2 id="modalTitle">ATUR KARTU KOMIK</h2>
+        <button type="button" class="close-btn" id="closeModalBtn" aria-label="Tutup">X</button>
+      </div>
+      <form id="customForm" class="modal-form">
+        <label>
+          <span>NAMA YANG ULANG TAHUN</span>
+          <input type="text" id="inputTo" maxlength="32" placeholder="Contoh: Rania" />
+        </label>
+        <label>
+          <span>NAMA PENGIRIM</span>
+          <input type="text" id="inputFrom" maxlength="32" placeholder="Contoh: Alfan" />
+        </label>
+        <label>
+          <span>PESAN UCAPAN</span>
+          <textarea id="inputMsg" rows="3" maxlength="220" placeholder="Tulis doa terbaikmu di sini..."></textarea>
+        </label>
+        <div class="modal-actions">
+          <button type="submit" class="comic-btn btn-primary">TERAPKAN KE KOMIK</button>
+          <button type="button" class="comic-btn btn-cream" id="copyLinkBtn">SALIN LINK KADO</button>
+        </div>
+        <p class="copy-feedback" id="copyFeedback" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
